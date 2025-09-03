@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://localhost:7027/api", // your backend
+  baseURL: "https://crud-taskmanager-with-jwt-authentication-tndo.onrender.com/api", // your backend
 });
 
 api.interceptors.request.use(config => {
