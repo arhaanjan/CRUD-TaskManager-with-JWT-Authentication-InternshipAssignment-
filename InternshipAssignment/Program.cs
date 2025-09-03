@@ -12,7 +12,7 @@ builder.Services.AddCors(options =>
     {
         policy.WithOrigins(
             "http://localhost:5173", // Local dev
-            "https://crud-task-manager-with-jwt-authenti.vercel.app/"
+            "https://crud-task-manager-with-jwt-authenti.vercel.app"
            
         )
         .AllowAnyHeader()
