@@ -8,12 +8,9 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowReactApp", policy =>
-    {
-        policy.WithOrigins("http://localhost:5173") // React dev server
-              .AllowAnyHeader()
-              .AllowAnyMethod();
-    });
+   policy.AllowAnyOrigin()
+      .AllowAnyHeader()
+      .AllowAnyMethod();
 });
 
 // Add DB context
@@ -51,4 +48,5 @@ app.UseSwaggerUI();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-app.Run();
+var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
+app.Run($"http://*:{port}");
