@@ -10,9 +10,13 @@ builder.Services.AddCors(options =>
 {
    options.AddPolicy("AllowReactApp", policy =>
     {
-        policy.AllowAnyOrigin()
-              .AllowAnyHeader()
-              .AllowAnyMethod();
+        policy.WithOrigins(
+            "http://localhost:5173", // Local dev
+            "https://crud-task-manager-with-jwt-authenti.vercel.app/"
+           
+        )
+        .AllowAnyHeader()
+        .AllowAnyMethod();
     });
 });
 
