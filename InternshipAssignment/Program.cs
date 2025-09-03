@@ -51,10 +51,21 @@ app.UseSwaggerUI();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+
+// Run migrations safely (won’t crash app if it fails)
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.Migrate();
+    try
+    {
+        db.Database.Migrate();
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"⚠️ Migration failed: {ex.Message}");
+    }
 }
-var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
-app.Run($"http://*:{port}");
+
+
+app.Run();
+
