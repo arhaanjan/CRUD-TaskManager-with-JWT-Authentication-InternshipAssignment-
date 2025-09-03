@@ -8,9 +8,12 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors(options =>
 {
-   policy.AllowAnyOrigin()
-      .AllowAnyHeader()
-      .AllowAnyMethod();
+   options.AddPolicy("AllowReactApp", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
 });
 
 // Add DB context
