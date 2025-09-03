@@ -8,11 +8,21 @@ namespace InternshipAssignment.Data
     {
         public AppDbContext CreateDbContext(string[] args)
         {
-            var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
-            // Replace with your actual connection string
-            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=TaskManagerDb;Trusted_Connection=True;");
+            var config = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true)
+                .AddEnvironmentVariables()
+                .Build();
 
-            return new AppDbContext(optionsBuilder.Options);
+            var conn = config.GetConnectionString("DefaultConnection")
+                       ?? Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection")
+                       ?? "Server=(localdb)\\MSSQLLocalDB;Database=TaskManagerDb;Trusted_Connection=True;";
+
+            var options = new DbContextOptionsBuilder<AppDbContext>()
+                .UseSqlServer(conn)
+                .Options;
+
+            return new AppDbContext(options);
         }
     }
 }
